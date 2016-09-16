@@ -22,12 +22,12 @@ RunMethod::RunMethod(GyroSensor* gyroSensor,LineTraceMethod* lineTraceMethod,
 
   tail = 95;
   tail_flag = false;
+    
 
 }
 
 RunMethod::~RunMethod(){
 
-fclose(timefile);
   tail = 95;
   tail_flag = false;
 
@@ -89,61 +89,85 @@ mClock->sleep(10);
  void RunMethod::execLineTracing(){
   switch(Line_Trace_flag){
       case 0: //ここから走行スタート
-          mTailControl->tail_control(tail,20,false);
-          mLineTraceMethod->run(0.34, 0.0, 0.01,120,-120,120,0);
-          if(mea1->point_x>230){
+          
+          if(!tail_flag){
+              
+              mTailControl->tail_control(102,50,true);
+              tail_flag = true;
+          }
+          
+          mLineTraceMethod->run(0.40, 0.0, 0.030,120,-120,120,0);
+          
+          mTailControl->tail_control(tail,100,false);
+          if(mea1->point_x>210){
               Line_Trace_flag = 1;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 1:
           //mLineTraceMethod->run(0.86, 0.008, 0.032,70,-100,100,0);
-          mLineTraceMethod->run(1.6, 0.01, 0.21,100,-100,100,0);
           //mLineTraceMethod->run(1.0, 0.01, 0.03,80,-80,80,0);
+          //mLineTraceMethod->run(1.6, 0.01, 0.3,100,-100,100,0);
+          
+          mLineTraceMethod->run(1.3, 0.01, 0.07,100,-100,100,0);
           if(mea1->point_y>40){
               Line_Trace_flag = 2;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 2:
-          mLineTraceMethod->run(0.4, 0.0, 0.01,120,-120,120,0);
+          mLineTraceMethod->run(0.40, 0.0, 0.03,120,-120,100,0);
+          if(mea1->point_y>160){
+              Line_Trace_flag = 3;
+              ev3_speaker_play_tone (480,100);
+          }
+          break;
+      case 3:
+           mLineTraceMethod->run(0.40, 0.0, 0.03,100,-100,100,0);
           if(mea1->point_y>200){
               Line_Trace_flag = 4;
               ev3_speaker_play_tone (480,100);
           }
           break;
-
       case 4:
-          mLineTraceMethod->run(1.6, 0.01, 0.35,80,-80,80,0);
-          if(mea1->point_y<190){
+          mLineTraceMethod->run(1.82, 0.01, 0.105,80,-80,80,0);
+          if(mea1->point_y<195){
               Line_Trace_flag = 5;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 5:
-          mLineTraceMethod->run(0.34, 0.01, 0.04,100,-100,100,0);
+          mLineTraceMethod->run(0.4, 0.0, 0.03,100,-100,100,0);
           if(mea1->point_y<95){
               Line_Trace_flag = 6;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 6:
-          mLineTraceMethod->run(1.3, 0.01, 0.04,100,-100,100,0);
-          if(mea1->point_y>92){
+          mLineTraceMethod->run(1.82, 0.01, 0.105,80,-80,80,0);
+          if(mea1->point_y>90&&mea1->point_x<200){
               Line_Trace_flag = 7;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 7:
-           mLineTraceMethod->run(0.3, 0.005, 0.03,18,-18,18,0);
-          
-          if(mea1->point_y>150){
-              mLineTraceMethod->run(0, 0, 0,0,0,0,0);
+           mLineTraceMethod->run(0.4, 0.0, 0.03,18,-18,18,0);
+          if(mea1->point_y>135){
               ev3_speaker_play_tone (480,100);
-              //Line_Trace_flag= 8;
-              //倒立
-              // if 静止　case 8へ
+              Line_Trace_flag= 18;
+              
+              mClock->reset();
           }
+          break;
+          
+      case 18:
+          mLineTraceMethod->run(0,0,0,0,0,0,0);
+          
+          if(mClock->now() >= 2000){
+              
+              Line_Trace_flag = 8;
+          }
+          
           break;
       case 8:
           
@@ -190,7 +214,6 @@ break;
 default:
 break;
 }
-
 }
 
 /**
