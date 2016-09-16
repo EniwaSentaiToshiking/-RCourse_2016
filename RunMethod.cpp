@@ -92,7 +92,7 @@ mClock->sleep(10);
           
           if(!tail_flag){
               
-              mTailControl->tail_control(102,50,true);
+              mTailControl->tail_control(100,50,true);
               tail_flag = true;
           }
           
@@ -151,46 +151,91 @@ mClock->sleep(10);
           }
           break;
       case 7:
-           mLineTraceMethod->run(0.4, 0.0, 0.03,18,-18,18,0);
+           mLineTraceMethod->run(0.4, 0.0, 0.03,30,-30,30,0);
           if(mea1->point_y>135){
               ev3_speaker_play_tone (480,100);
-              Line_Trace_flag= 18;
-              
+              Line_Trace_flag = 8;
+              mTailControl->tail_control(85, 50, false);
               mClock->reset();
           }
           break;
           
-      case 18:
-          mLineTraceMethod->run(0,0,0,0,0,0,0);
+      case 8:
+
+       mTailControl->tail_control(85,50,false);
+
+       if(mea1->point_y >= 140){
+          mLineTraceMethod->run(0.00,0.00,0.00,-5,-5,5,0);
+        }else if(mea1->point_y <= 135){
+          mLineTraceMethod->run(0.3, 0.005, 0.03,5,-5,5,0);
+        }else {
+          mLineTraceMethod->run(0.3, 0.005, 0.03,0,0,0,0);
+        }
           
-          if(mClock->now() >= 2000){
-              
-              Line_Trace_flag = 8;
+          if(mClock->now() >= 3500 && mea1->point_y < 140 && mea1->point_y > 135){
+            tail_flag = false;
+              mStairs->run();
+              Line_Trace_flag = 9;
+              mClock->reset();
           }
           
           break;
-      case 8:
-          
-          mLineTraceMethod->spin_run();
-          
-          //if 一回転 -> case9へ
-          
-          break;
-          
       case 9:
-          
-          
-          //case 7,8 のような動作を繰り返し
-          //case 10へ
+         
+    if(!tail_flag){
+      mTailControl->tail_control(100,50,true);
+      tail_flag = true;
+    }
+    
+          mLineTraceMethod->run(0.3, 0.005, 0.03,18,-18,18,0);
+
+mTailControl->tail_control(tail,50,false);
+
+      if(mea1->point_y>155){
+              ev3_speaker_play_tone (480,100);
+              Line_Trace_flag = 10;
+              mTailControl->tail_control(85, 50, false);
+              mClock->reset();
+          }
           break;
-          
+
+
           
       case 10:
-           mLineTraceMethod->run(0.3, 0.005, 0.03,18,-18,18,0);
           
-          // if 灰色検知 -> ガレージ in
+            mTailControl->tail_control(85,50,false);
+         
+
+          if(mea1->point_y >= 160){
+          mLineTraceMethod->run(0.0, 0.000, 0.00,-5,-5,5,0);
+        }else if(mea1->point_y <= 155){
+          mLineTraceMethod->run(0.3, 0.005, 0.03,5,-5,5,0);
+        }else {
+          mLineTraceMethod->run(0.3, 0.005, 0.03,0,0,0,0);
+        }
           
+          if(mClock->now() >= 3500 && mea1->point_y < 160 && mea1->point_y > 155){
+            tail_flag = false;
+              mStairs->run();
+              Line_Trace_flag = 11;
+              mClock->reset();
+          }
           break;
+          
+      case 11:
+
+if(!tail_flag){
+      mTailControl->tail_control(100,50,true);
+      tail_flag = true;
+    }
+    
+          mLineTraceMethod->run(0.3, 0.005, 0.03,18,-18,18,0);
+
+mTailControl->tail_control(tail,50,false);
+
+          break;
+
+
           // mLineTraceMethod->run(0.27, 0.0, 0.01,120,-120,120,0);
           // mLineTraceMethod->run(0.86, 0.008, 0.032,70,-100,100,0);//p,i,d,forward,pidの最小値,pidの最大値/0.022
           // mLineTraceMethod->run(0.3, 0.005, 0.03,30,-30,30,-8);

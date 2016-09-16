@@ -19,39 +19,39 @@ Stairs::~Stairs() {}
 void Stairs::run(){
 
 	mClock->reset();
-
+	stairsFlag = 0;
 	while(stairsFlag != -1){
 		switch(stairsFlag){
 			case 0:
 
-			mLineTraceMethod->run(0.0, 0.0, 0.0,-10,-10,10,2);
+			mTailControl->tail_control(90, 50, false);
+                
+                
+                mLeftMotor->setPWM(20);
+                mRightMotor->setPWM(20);
 
-			if(mClock->now() >= 1000){
-				stairsFlag = 1;
-			}
+                mClock->wait(300);
+
+               mLeftMotor->setPWM(0);
+                mRightMotor->setPWM(0);
+
+                mClock->wait(1000);
+
+                mClock->reset();
+
+                  mLeftMotor->setPWM(15);
+                mRightMotor->setPWM(-15);
+
+                mClock->wait(4200);
+
+				mLeftMotor->setPWM(0);
+                mRightMotor->setPWM(0);  
+
+                mClock->wait(3000);              
+
+                stairsFlag = -1;
 
 			break;
-
-			case 1:
-
-
-			break;
-
-
-
-			case 2:
-
-
-
-			mClock->wait(2000);
-
-			stairsFlag = 3;
-
-			break;
-
-case 3:
-
-break;
 
 			default:
 			stairsFlag = -1;

@@ -20,6 +20,11 @@ LineTraceMethod::~LineTraceMethod() {
 
 void LineTraceMethod::run(float p, float i, float d,int forward,int min, int max,int offset){
 
+  if (mIsInitialized == false) {
+    mBalancingWalker->init();
+    mIsInitialized = true;
+  }
+
 int turn = mPID->calcPID(p, i, d, mColorSensor->getBrightness(), mCalibration->calc_avarage_color(),min,max) * -1; //操作量
     /*スピード70のときp=0.84,i=0.005,d=0.022*/
 
