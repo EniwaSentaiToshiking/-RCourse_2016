@@ -58,6 +58,8 @@ Garage* gar;
 gray_check* g_check1;
 Measure* mea1;
 
+FILE *timefile;
+
 void execUndefined();
     void execWaitingForStart();
     void execLineTracing();

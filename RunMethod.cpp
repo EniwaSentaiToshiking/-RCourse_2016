@@ -22,10 +22,12 @@ RunMethod::RunMethod(GyroSensor* gyroSensor,LineTraceMethod* lineTraceMethod,
 
   tail = 95;
   tail_flag = false;
+
 }
 
 RunMethod::~RunMethod(){
 
+fclose(timefile);
   tail = 95;
   tail_flag = false;
 
@@ -110,27 +112,7 @@ mClock->sleep(10);
               ev3_speaker_play_tone (480,100);
           }
           break;
-//      case 3:
-//          mLineTraceMethod->run(1.7, 0.01, 0.04,100,-100,100,0);
-//          if(mea1->point_y>180){
-//              Line_Trace_flag = 4;
-//              ev3_speaker_play_tone (480,100);
-//          }
-//          break;
-//      case 20:
-//          mLineTraceMethod->run(0.8, 0.01, 0.04,100,-100,100,0);
-//          if(mea1->point_x<200){
-//              Line_Trace_flag = 21;
-//              ev3_speaker_play_tone (480,100);
-//          }
-//          break;
-//      case 21:
-//          mLineTraceMethod->run(1.8, 0.01, 0.04,100,-100,100,0);
-//          if(mea1->point_y<175){
-//              Line_Trace_flag = 4;
-//              ev3_speaker_play_tone (480,100);
-//          }
-//          break;
+
       case 4:
           mLineTraceMethod->run(1.6, 0.01, 0.35,80,-80,80,0);
           if(mea1->point_y<190){
@@ -208,6 +190,7 @@ break;
 default:
 break;
 }
+
 }
 
 /**
