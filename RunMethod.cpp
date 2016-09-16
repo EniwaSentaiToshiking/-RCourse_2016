@@ -118,15 +118,15 @@ mClock->sleep(10);
           }
           break;
       case 2:
-          mLineTraceMethod->run(0.40, 0.0, 0.03,120,-120,100,0);
-          if(mea1->point_y>160){
-              Line_Trace_flag = 3;
+          mLineTraceMethod->run(0.40, 0.0, 0.03,120,-120,120,0);
+          if(mea1->point_y>210){
+              Line_Trace_flag = 4;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 3:
            mLineTraceMethod->run(0.40, 0.0, 0.03,100,-100,100,0);
-          if(mea1->point_y>200){
+          if(mea1->point_y>195){
               Line_Trace_flag = 4;
               ev3_speaker_play_tone (480,100);
           }
@@ -153,7 +153,7 @@ mClock->sleep(10);
           }
           break;
       case 7:
-           mLineTraceMethod->SCENARIO_run(0.8, 0.0, 0.03,18,-18,18,0);
+           mLineTraceMethod->run(0.8, 0.0, 0.03,18,-18,18,0);
           
           // Todo  if 灰色検知 ->　mea1->distance_reset()
           
@@ -165,7 +165,7 @@ mClock->sleep(10);
           break;
           
       case 77:
-          mLineTraceMethod->SCENARIO_run(0.4, 0.0, 0.03,30,-30,30,0);
+          mLineTraceMethod->run(0.4, 0.0, 0.03,60,-60,60,0);
           
           if(mea1->point_x>20){
               ev3_speaker_play_tone (480,100);
