@@ -28,7 +28,7 @@ public:
 	LineTraceMethod(ColorSensor* colorSensor,PID* pID,BalancingWalker* balancingWalker,Calibration* calibration,SonarAlert* sonarAlert);
 	bool sonarFlag;
  void run(float p,float i,float d,int forward,int mix,int max,int offset);
-	void SCENARIO_run();
+	void SCENARIO_run(float p,float i,float d,int forward,int mix,int max,int offset);
     void spin_run();
 
 

@@ -23,6 +23,8 @@ RunMethod::RunMethod(GyroSensor* gyroSensor,LineTraceMethod* lineTraceMethod,
   tail = 95;
   tail_flag = false;
     
+    counter = 0;
+    
 
 }
 
@@ -130,7 +132,7 @@ mClock->sleep(10);
           }
           break;
       case 4:
-          mLineTraceMethod->run(1.82, 0.01, 0.105,80,-80,80,0);
+          mLineTraceMethod->run(1.84, 0.0, 0.105,80,-80,80,0);
           if(mea1->point_y<195){
               Line_Trace_flag = 5;
               ev3_speaker_play_tone (480,100);
@@ -144,48 +146,72 @@ mClock->sleep(10);
           }
           break;
       case 6:
-          mLineTraceMethod->run(1.82, 0.01, 0.105,80,-80,80,0);
-          if(mea1->point_y>90&&mea1->point_x<200){
+          mLineTraceMethod->run(1.82, 0.0, 0.108,80,-80,80,0);
+          if(mea1->point_y>85&&mea1->point_x<200){
               Line_Trace_flag = 7;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 7:
-           mLineTraceMethod->run(0.4, 0.0, 0.03,30,-30,30,0);
-          if(mea1->point_y>135){
+           mLineTraceMethod->SCENARIO_run(0.8, 0.0, 0.03,18,-18,18,0);
+          
+          // Todo  if 灰色検知 ->　mea1->distance_reset()
+          
+           if(g_check1->gray_checker(mCalibration->LIGHT_BLACK,mCalibration->LIGHT_WHITE)==0){
+               ev3_speaker_play_tone (480,100);
+               mea1->distance_reset();
+               Line_Trace_flag = 77;
+           }
+          break;
+          
+      case 77:
+          mLineTraceMethod->SCENARIO_run(0.4, 0.0, 0.03,30,-30,30,0);
+          
+          if(mea1->point_x>20){
               ev3_speaker_play_tone (480,100);
               Line_Trace_flag = 8;
-              mTailControl->tail_control(85, 50, false);
+         //     mTailControl->tail_control(85, 50, false);
               mClock->reset();
           }
           break;
-          
+
       case 8:
 
-       mTailControl->tail_control(85,50,false);
+     //  mTailControl->tail_control(85,50,false);
 
-       if(mea1->point_y >= 140){
+       if(mea1->point_x >= 32){
           mLineTraceMethod->run(0.00,0.00,0.00,-5,-5,5,0);
-        }else if(mea1->point_y <= 135){
+        }else if(mea1->point_x <= 37){
           mLineTraceMethod->run(0.3, 0.005, 0.03,5,-5,5,0);
         }else {
           mLineTraceMethod->run(0.3, 0.005, 0.03,0,0,0,0);
         }
           
-          if(mClock->now() >= 3500 && mea1->point_y < 140 && mea1->point_y > 135){
+          if(mClock->now() >= 4000 && mea1->point_x < 37 && mea1->point_x > 32){
             tail_flag = false;
-              mStairs->run();
-              Line_Trace_flag = 9;
+              Line_Trace_flag = 78;
               mClock->reset();
+              counter = 0;
           }
           
           break;
+          
+      case 78:
+          
+          mLineTraceMethod->spin_run();
+          
+          if(mClock->now() >= 3500){
+              Line_Trace_flag = 9;
+          }
+          
+          break;
+          
       case 9:
          
-    if(!tail_flag){
+   /* if(!tail_flag){
       mTailControl->tail_control(100,50,true);
       tail_flag = true;
-    }
+    }*/
     
           mLineTraceMethod->run(0.3, 0.005, 0.03,18,-18,18,0);
 
@@ -289,7 +315,7 @@ break;
 
  default:
 
- mLineTraceMethod->SCENARIO_run();
+ //mLineTraceMethod->SCENARIO_run();
 
  break;
 }

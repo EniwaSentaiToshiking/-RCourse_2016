@@ -53,6 +53,8 @@ LookupMethod* mLookupMethod;
 Stairs* mStairs;
 
 SonarAlert* mSonarAlert;
+    
+    int counter;
 
 Garage* gar;
 gray_check* g_check1;
