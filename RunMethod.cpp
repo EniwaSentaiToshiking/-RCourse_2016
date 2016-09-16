@@ -96,7 +96,7 @@ mClock->sleep(10);
           break;
       case 1:
           //mLineTraceMethod->run(0.86, 0.008, 0.032,70,-100,100,0);
-          mLineTraceMethod->run(1.6, 0.01, 0.18,100,-100,100,0);
+          mLineTraceMethod->run(1.6, 0.01, 0.21,100,-100,100,0);
           //mLineTraceMethod->run(1.0, 0.01, 0.03,80,-80,80,0);
           if(mea1->point_y>40){
               Line_Trace_flag = 2;
@@ -105,7 +105,7 @@ mClock->sleep(10);
           break;
       case 2:
           mLineTraceMethod->run(0.4, 0.0, 0.01,120,-120,120,0);
-          if(mea1->point_y>180){
+          if(mea1->point_y>200){
               Line_Trace_flag = 4;
               ev3_speaker_play_tone (480,100);
           }
@@ -132,7 +132,7 @@ mClock->sleep(10);
 //          }
 //          break;
       case 4:
-          mLineTraceMethod->run(1.7, 0.01, 0.2,80,-80,80,0);
+          mLineTraceMethod->run(1.6, 0.01, 0.35,80,-80,80,0);
           if(mea1->point_y<190){
               Line_Trace_flag = 5;
               ev3_speaker_play_tone (480,100);
