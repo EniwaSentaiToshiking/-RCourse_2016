@@ -133,7 +133,7 @@ void main_task(intptr_t unused)
     mea->measure();
     
  gRunMethod->run();  // 倒立走行
- gGetLogData->create_logFile(gyroSensor->getAnglerVelocity(),colorSensor->getBrightness(),mea);//ログデータ
+ // gGetLogData->create_logFile(gyroSensor->getAnglerVelocity(),colorSensor->getBrightness(),mea);//ログデータ
  if(gyroSensor->getAnglerVelocity() <= -350 || gyroSensor->getAnglerVelocity() >= 350){
   break;
 }
