@@ -35,7 +35,7 @@ private:
     Motor* m_leftMotor;
     Motor* m_rightMotor;
     FILE *pid_data;
-
+    
    public:
     Measure(Motor* g_rightMotor,Motor* g_leftMotor);
     void measure();

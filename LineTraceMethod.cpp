@@ -35,21 +35,14 @@ mBalancingWalker->run();
 
 }
 
-void LineTraceMethod::SCENARIO_run(float p, float i, float d,int forward,int min, int max,int offset){
+void LineTraceMethod::SCENARIO_run(){
     
-    int turn;
-    
-    if(mColorSensor->getBrightness() >= 16){
-        turn = 10;
+    if(mColorSensor->getBrightness() >= 14){
+        mBalancingWalker->SCENARIO_run(true);
     }else{
-        turn = -10;
+        mBalancingWalker->SCENARIO_run(false);
     }
 
-    mBalancingWalker->setCommand(forward, turn,offset);
-    
-    mBalancingWalker->run();
-    
-    
 }
 
 void LineTraceMethod::spin_run(){

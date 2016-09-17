@@ -2,7 +2,7 @@
 
 Stairs::Stairs(const GyroSensor* gyroSensor, Motor* leftMotor,
 	Motor* rightMotor, TailControl* tailControl,
-	Clock* clock,BalancingWalker* balancingWalker, LineTraceMethod* lineTraceMethod){
+	Clock* clock,BalancingWalker* balancingWalker, LineTraceMethod* lineTraceMethod,gray_check* g_check2, Measure* mea2){
 
 	mGyroSensor = gyroSensor;
 	mRightMotor = rightMotor;
@@ -11,6 +11,9 @@ Stairs::Stairs(const GyroSensor* gyroSensor, Motor* leftMotor,
 	mClock = clock;
 	mBalancingWalker = balancingWalker;
 	mLineTraceMethod = lineTraceMethod;
+    g_check1 = g_check2;
+    mea1 = mea2;
+
 	stairsFlag = 0;
 }
 
@@ -19,12 +22,11 @@ Stairs::~Stairs() {}
 void Stairs::run(){
 
 	mClock->reset();
-	stairsFlag = 0;
-	while(stairsFlag != -1){
+    
 		switch(stairsFlag){
 			case 0:
 
-			mTailControl->tail_control(90, 50, false);
+			mTailControl->tail_control(85, 50, false);
                 
                 
                 mLeftMotor->setPWM(20);
@@ -32,31 +34,34 @@ void Stairs::run(){
 
                 mClock->wait(300);
 
-               mLeftMotor->setPWM(0);
+                mLeftMotor->setPWM(0);
                 mRightMotor->setPWM(0);
 
-                mClock->wait(1000);
+                mClock->wait(2000);
+                
+                for(int i = 86; i<= 93; i++){
+                    
+                    mTailControl->tail_control(i,10,true);
+                    
+                    mClock->wait(4);
+                }
 
-                mClock->reset();
-
-                  mLeftMotor->setPWM(15);
-                mRightMotor->setPWM(-15);
-
-                mClock->wait(4200);
-
-				mLeftMotor->setPWM(0);
-                mRightMotor->setPWM(0);  
-
-                mClock->wait(3000);              
-
+                mClock->wait(2000);
+                
                 stairsFlag = -1;
 
 			break;
 
+            case 1:
+                
+                
+                //if 距離進んでなかったら音鳴らしてストップ。
+                
+                break;
+                
 			default:
 			stairsFlag = -1;
 			break;
-		}
-		mClock->sleep(4);
-	}
+
+    }
 }

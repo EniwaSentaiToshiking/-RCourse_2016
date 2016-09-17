@@ -14,48 +14,61 @@ Garage::~Garage(){
 }
 
 void Garage::slowrun_stop(){
-
-	c->reset();
 	
-	while(GARAGE_flag <= 4)
 		switch(GARAGE_flag){
 			case 0: //バランスを取りながら走行
-			// bw->setCommand(5,0,0);
-			// bw->run();
-			rMotor->setPWM(20);
-			lMotor->setPWM(20);
+               
+                mTailControl->tail_control(85, 50, false);
+                
+                
+                lMotor->setPWM(15);
+                rMotor->setPWM(15);
+                
+                c->wait(300);
+                
+                lMotor->setPWM(0);
+                rMotor->setPWM(0);
+                
+                c->wait(1000);
+                
+                for(int i = 86; i <= 93; i++){
+                     mTailControl->tail_control(i, 10, true);
+                
+                    c->wait(4);
+                }
+                
+                        c->wait(1000);
+                
+                GARAGE_flag = 1;
+                
+                break;
 
-		if(c->now() == 100){
-  		GARAGE_flag=1;
-  		c->reset();
-		}
-
-		break;
-
-			case 1: //尻尾を出しながら少し傾く
-			// bw->setCommand(0,0,-15);
-			// bw->run();
-			mTailControl->tail_control(85, 50, false);
-
-			c->wait(4);
-
-  			GARAGE_flag=2;
-
-			break;
-
-			case 2:
-
-			rMotor->setPWM(10);
-			lMotor->setPWM(10);
-
-			if(c->now() >= 3200){
-				rMotor->setBrake(true);
-				lMotor->setBrake(true);
-
- 				rMotor->setPWM(0);
-				lMotor->setPWM(0);
-			}
-	}
+            case 1: //尻尾を出しながら少し傾く
+                // bw->setCommand(0,0,-15);
+                // bw->run();
+                
+                rMotor->setPWM(10);
+                lMotor->setPWM(10);
+                
+                mTailControl->tail_control(85, 50, false);
+                
+                c->wait(400);
+                
+                GARAGE_flag=2;
+                
+                break;
+                
+            case 2:
+                
+                rMotor->setBrake(true);
+                lMotor->setBrake(true);
+                
+                rMotor->setPWM(0);
+                lMotor->setPWM(0);
+                
+                break;
+                
+        }
 }
 
 

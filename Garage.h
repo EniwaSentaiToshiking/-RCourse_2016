@@ -18,9 +18,11 @@ private:
 	BalancingWalker *bw; 
 	Clock *c;
 	GyroSensor *gyro;
-	int GARAGE_flag;
+
 
 public:
+    
+    int GARAGE_flag;
 	Garage(Motor* r, Motor* l, TailControl* tc, BalancingWalker* b, Clock* clock, GyroSensor* g);
 	void slowrun_stop();
 	virtual ~Garage();

@@ -27,7 +27,9 @@ void Measure::measure(){
 
   point_x=x1;
   point_y=y1;//現在の座標を実際に取得する値
-  
+    
+  // point_y貯めておく配列に代入
+    
   x0=x1;
   y0=y1;
   z0=z1;//座標の更新
@@ -42,3 +44,4 @@ void Measure::distance_reset(){
     r1=r0;
     l1=l0;
 }//距離初期化
+
