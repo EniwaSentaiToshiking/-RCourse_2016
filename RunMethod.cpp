@@ -156,7 +156,7 @@ mClock->sleep(10);
           break;
       case 7:
           
-          mLineTraceMethod->run(0.3, 0.0, 0.03,25,-25,25,-5);
+	mLineTraceMethod->run(0.3, 0.0, 0.03,18,-18,18,-1);
 
           // Todo  if 灰色検知 ->　mea1->distance_reset()
           if(mea1->point_x<150){
