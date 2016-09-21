@@ -119,21 +119,14 @@ mClock->sleep(10);
           break;
       case 2:
           mLineTraceMethod->run(0.40, 0.0, 0.03,120,-120,120,0);
-          if(mea1->point_y>210){
-              Line_Trace_flag = 4;
-              ev3_speaker_play_tone (480,100);
-          }
-          break;
-      case 3:
-           mLineTraceMethod->run(0.40, 0.0, 0.03,100,-100,100,0);
-          if(mea1->point_y>195){
+          if(mea1->point_y>190){
               Line_Trace_flag = 4;
               ev3_speaker_play_tone (480,100);
           }
           break;
       case 4:
           //mLineTraceMethod->run(1.84, 0.0, 0.105,60,-60,60,0);
-          mLineTraceMethod->run(1.5, 0.0, 0.07,60,-60,60,0);
+          mLineTraceMethod->run(1.5, 0.0, 0.07,40,-40,40,0);
           if(mea1->point_y<190){
               Line_Trace_flag = 5;
               ev3_speaker_play_tone (480,100);
@@ -156,10 +149,10 @@ mClock->sleep(10);
           break;
       case 7:
           
-          mLineTraceMethod->run(0.3, 0.0, 0.03,25,-25,25,-5);
+          mLineTraceMethod->run(0.3, 0.0, 0.03,20,-20,20,-1);
 
           // Todo  if 灰色検知 ->　mea1->distance_reset()
-          if(mea1->point_x<150){
+          if(mea1->point_x<155){
               ev3_speaker_play_tone (480,100);
               //尻尾下ろす処理
               mClock->reset();
@@ -174,7 +167,7 @@ mClock->sleep(10);
           
           if(mClock->now() <= 1000){
               mTailControl->tail_control(85,50,false);
-               mLineTraceMethod->run(0.0, 0.0, 0.0,0,0,0,0);
+                mLineTraceMethod->run(0.3, 0.0, 0.03,18,-18,18,0);
           }else {
               mState = SCENARIO_TRACE;
               SCENARIO_flag = 0;

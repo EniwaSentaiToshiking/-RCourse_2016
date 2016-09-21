@@ -30,14 +30,26 @@ void Garage::slowrun_stop(){
                 rMotor->setPWM(0);
                 
                 c->wait(1000);
-                
-                for(int i = 86; i <= 93; i++){
-                     mTailControl->tail_control(i, 10, true);
-                
-                    c->wait(4);
+               
+               
+                for(int i = 84; i >= 70; i--){
+                    mTailControl->tail_control(i,10,true);
+                    
+                    c->sleep(300);
+                    
                 }
                 
-                        c->wait(1000);
+                c->wait(2000);
+                
+                mTailControl->tail_control(75, 50, true);
+                c->wait(1000);
+                
+                for(int i = 76; i <= 93; i++){
+                     mTailControl->tail_control(i, 10, true);
+                
+                    c->sleep(4);
+                }
+                
                 
                 GARAGE_flag = 1;
                 
